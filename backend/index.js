@@ -3,6 +3,11 @@ const app=express();
 require('dotenv').config()
 const port =process.env.port;
 const studentRoutes=require('./routes/student.route')
+app.use(express.json())
+
+const cors=require('cors')
+app.use(cors())
+
 const mongoose=require('mongoose')
 mongoose.connect("mongodb://localhost:27017/jpmc")
 .then((res)=>{console.log("connection success")})

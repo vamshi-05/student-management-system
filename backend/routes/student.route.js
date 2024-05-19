@@ -5,14 +5,18 @@ const {
     addStudents,
     getStudent,
     updateStudents,
+    deleteStudent,
 } = require('../controllers/student.controller')
 
 
 
 
-routes.get('/', getStudents);
-routes.post('/', addStudents)
-routes.get('/:id', getStudent);
-routes.patch('/:id', updateStudents);
+routes.route('/')
+    .get(getStudents)
+    .post( addStudents)
+routes.route('/:id')
+    .get( getStudent)
+    .patch( updateStudents)
+    .delete(deleteStudent)
 //routes.put('/:id', replaceStudents);
 module.exports = routes

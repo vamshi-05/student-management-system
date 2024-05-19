@@ -16,11 +16,19 @@ const getStudent = async (req,res)=>{
 
 const addStudents= async (req,res)=>{
    try{
-        studentModel.create(req.body);
+        
+        // console.log(req.body)
+        await studentModel.create({
+            "_id" : req.body._id,
+            "name" : req.body.name,
+            "age" : req.body.age,
+            "course" : req.body.course
+        });
         
         res.status(200).send(req.body);
    }
    catch(error){
+    
     res.status(404).json({message : "unable to add student"})
    }
 }
@@ -60,10 +68,24 @@ const replaceStudents= async (req,res)=>{
 }
 */
 
+const deleteStudent= async (req,res)=>{
+    try{
+        const student= await studentModel.findByIdAndDelete(req.params.id)
+        if(!student)
+            res.status(400).send({"message" : "failed to delete"})
+        else
+            res.status(200).send(student);
+    }
+    catch(error){
+        res.status(404).send({"message" : "unable to delete student"})
+    }
+}
+
 module.exports={
     getStudents,
     addStudents,
     getStudent,
     updateStudents,
+    deleteStudent,
 
 }
